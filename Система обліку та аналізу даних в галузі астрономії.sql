@@ -12,14 +12,6 @@ CREATE TABLE IF NOT EXISTS public.researcher
     PRIMARY KEY (id)
 );
 
-CREATE TABLE IF NOT EXISTS public.labolatory
-(
-    id integer NOT NULL,
-    "lab name" character varying(100) NOT NULL,
-    tools character varying(50) NOT NULL,
-    PRIMARY KEY (id)
-);
-
 CREATE TABLE IF NOT EXISTS public.object
 (
     id integer NOT NULL,
@@ -38,15 +30,14 @@ CREATE TABLE IF NOT EXISTS public."object type"
     PRIMARY KEY (id)
 );
 
+CREATE TABLE IF NOT EXISTS public.labolatory
+(
+    id integer NOT NULL,
+    "lab name" character varying(100) NOT NULL,
+    PRIMARY KEY (id)
+);
+
 ALTER TABLE IF EXISTS public.researcher
-    ADD FOREIGN KEY (laboratory_id)
-    REFERENCES public.labolatory (id) MATCH SIMPLE
-    ON UPDATE NO ACTION
-    ON DELETE NO ACTION
-    NOT VALID;
-
-
-ALTER TABLE IF EXISTS public.object
     ADD FOREIGN KEY (laboratory_id)
     REFERENCES public.labolatory (id) MATCH SIMPLE
     ON UPDATE NO ACTION
@@ -57,6 +48,14 @@ ALTER TABLE IF EXISTS public.object
 ALTER TABLE IF EXISTS public.object
     ADD FOREIGN KEY (type_id)
     REFERENCES public."object type" (id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public.object
+    ADD FOREIGN KEY (laboratory_id)
+    REFERENCES public.labolatory (id) MATCH SIMPLE
     ON UPDATE NO ACTION
     ON DELETE NO ACTION
     NOT VALID;
